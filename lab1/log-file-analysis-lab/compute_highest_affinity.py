@@ -6,17 +6,21 @@
 # See the test cases for more details.
 
 
-def affinity(site1, site2, user_sites):
-    return len(filter(lambda u: site1 in u and site2 in u, user_sites))
+def affinity(site_pair, user_sites):
+    return len(filter(lambda u: site_pair[0] in u and
+                      site_pair[1] in u, user_sites))
 
 
 def highest_affinity(site_list, user_list, time_list):
     sites = sorted(list(set(site_list)))
     users = sorted(list(set(user_list)))
+    # generate list of the list of websites each user visited
     user_sites = [[site_list[i] for i in range(len(user_list))
                   if user == user_list[i]] for user in users]
+    # generate all valid site pairs
     site_pairs = [(sites[i], sites[j]) for i in range(len(sites))
                   for j in range(i + 1, len(sites))]
-    affinities = dict(((site[0], site[1]), affinity(site[0], site[1], user_sites))
-                      for site in site_pairs)
+    # calculate affinities for each website pair
+    affinities = dict((site_pair, affinity(site_pair, user_sites))
+                      for site_pair in site_pairs)
     return max(affinities.iterkeys(), key=lambda key: affinities[key])

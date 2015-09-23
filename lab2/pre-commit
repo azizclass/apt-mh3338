@@ -1,0 +1,12 @@
+#!/bin/bash
+
+files=$(git status --short | grep -E '^(A|M)' | awk '{ print $2 }')
+
+for file in ${files}; do
+    badlines=$(sed -n '/\(.\)\{81\}/p' ${file} | wc -l)
+    if [ ${badlines} -ne 0 ]; then
+        echo "COMMIT ERROR: ${file} contains lines with over 80 characters."
+        exit 1
+    fi
+done
+exit 0

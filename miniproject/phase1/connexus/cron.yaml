@@ -1,0 +1,7 @@
+cron:
+- description: check to see if e-mail should be sent
+  url: /trend_email
+  schedule: every 5 minutes
+- description: updated leaderboard scores
+  url: /leaderboard_calc
+  schedule: every 5 minutes

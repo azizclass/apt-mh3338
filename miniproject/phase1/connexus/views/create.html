@@ -1,0 +1,33 @@
+{% extends "views/baseui.html" %}
+{% set active_page = "create" %}
+{% block content %}
+<br/>
+<br/>
+<form action="/create" method="post">
+    <div class="row">
+        <div class="col-lg-4">
+            <input class="form-control" name="name" placeholder="Stream Name">
+            <h3>Name your stream</h3>
+            <br/>
+            <textarea class="form-control" rows="3" name="subscribers"></textarea>
+            <br/>
+            <textarea class="form-control" rows="3" name="message" 
+                placeholder="Optional message for invite"></textarea>
+            <h3>Add subscribers</h3>
+            <br/>
+        </div>
+        <div class="col-lg-4">
+            <textarea class="form-control" rows="2" name="tags"></textarea>
+            <h3>Tag your stream</h3>
+            <br/>
+            <input class="form-control" name="cover_image_url">
+            <h3>URL to cover image</h3>
+            <h3>(Can be empty)</h3>
+        </div>
+        <div class="col-lg-4">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-default">Create Stream</button>
+</form>
+<br/>
+{% endblock %}

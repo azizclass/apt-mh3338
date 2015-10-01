@@ -1,0 +1,30 @@
+{% extends "views/baseui.html" %}
+{% set active_page = "view" %}
+{% block content %}
+<div class="row">
+    <h1>View All Streams</h1>
+</div>
+<br/>
+<div class="row">
+    {% for stream in streams %}
+    <div class="col-lg-3">
+        <div class="thumbnail">
+            <a href="/view?stream_name={{ stream.name }}&increment=1">
+                {% if stream.cover_image_url %}
+                    <img src="{{ stream.cover_image_url }}" 
+                     class="img-responsive">
+                {% else %}
+                    <img
+                     src="http://www.yenmag.net/wp-content/uploads/2013/09/Grumpy-Cat-thumbnail-190x190.jpg" class="img-responsive">
+                {% endif %}
+            </a>
+            <div class="caption">
+                <a href="/view?stream_name={{ stream.name }}&increment=1">
+                    <h3 class="text-center">{{ stream.name }}</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

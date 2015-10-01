@@ -1,0 +1,14 @@
+{% extends "views/baseui.html" %}
+{% set active_page = "error" %}
+{% block content %}
+<br/>
+<br/>
+<div class="row error">
+  <div class="col-lg-2">
+      <span class="glyphicon error-glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+  </div>
+  <div class="col-lg-6">
+      <h4>{{ error }}</h4>
+  </div>
+</div>
+{% endblock %}

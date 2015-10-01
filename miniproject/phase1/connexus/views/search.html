@@ -1,0 +1,50 @@
+{% extends "views/baseui.html" %}
+{% set active_page = "search" %}
+{% block content %}
+<br/>
+<br/>
+<div class="row">
+    <form action="/search" method="get">
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </span>
+                <input type="text" name="query" class="form-control"
+                value="{{ query }}">
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-default">Search</button>
+        </div>
+    </form>
+</div>
+</br>
+{% if query %}
+<h4>{{ matches | length }} results for <b>{{ query }}</b>,</h4>
+<h4>click on an image to view stream</h4>
+{% endif %}
+</br>
+{% for match in matches %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="thumbnail">
+            <a href="/view?stream_name={{ match.name }}&increment=1">
+                {% if match.cover_image_url %}
+                    <img src="{{ match.cover_image_url }}" 
+                     class="img-responsive">
+                {% else %}
+                    <img
+                     src="http://www.yenmag.net/wp-content/uploads/2013/09/Grumpy-Cat-thumbnail-190x190.jpg" class="img-responsive">
+                {% endif %}
+            </a>
+            <div class="caption">
+                <a href="/view?stream_name={{ match.name }}">
+                    <h3 class="text-center">{{ match.name }}</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</br>
+{% endfor %}
+{% endblock %}

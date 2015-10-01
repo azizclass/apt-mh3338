@@ -1,0 +1,164 @@
+body {
+  padding-top: 20px;
+}
+
+.footer {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: 40px;
+  border-top: 1px solid #eee;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+
+.jumbotron .btn {
+  padding: 14px 24px;
+  font-size: 21px;
+}
+
+.btn {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* Customize the nav-justified links to be fill the entire space of the .navbar */
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.checkbox {
+    font-size: 18px;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.panel-default {
+    border: 2px solid black;
+}
+
+.comment-box {
+    width: 100%;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #d8d8d8;
+}
+
+.error {
+    color: red;
+}
+
+.stream-link {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+table { border-collapse: collapse; }
+table tr td:first-child,
+table tr th:first-child {
+      border-left: none;
+}
+
+table tr td:last-child,
+table tr th:last-child {
+    border-right: none;
+}
+ 
+tr { border: none; }
+th, td {
+    border-top: none !important;
+    border-bottom: none !important;
+    border-right: solid 2px black; 
+    border-left: solid 2px black;
+}
+
+.error-glyphicon {
+        font-size: 100px;
+        display:block;
+        text-align:center;
+}
+
+.btn-default {
+    border: 2px solid black;
+}
+
+.input-group-addon,
+.form-control {
+    border: 2px solid black;
+}
+
+.nav-justified {
+  width: 60%;
+  background-color: white;
+  border-radius: 5px;
+}
+.nav-justified > li > a {
+  margin-bottom: 0;
+  font-size: 18px;
+  text-align: center;
+  padding: 5px 15px;
+  background-color: white; /* Old browsers */
+}
+.nav-justified > .active > a,
+.nav-justified > .active > a:hover,
+.nav-justified > .active > a:focus {
+  background-color: white;
+  background-image: none;
+  font-weight: bold;
+}
+.nav-justified > li:first-child > a {
+  border-radius: 5px 5px 0 0;
+}
+.nav-justified > li:last-child > a {
+  border-bottom: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+@media (min-width: 768px) {
+  .nav-justified {
+    max-height: 52px;
+  }
+  .nav-justified > li > a {
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+  }
+  .nav-justified > li:first-child > a {
+    border-left: 0;
+    border-radius: 5px 0 0 5px;
+  }
+  .nav-justified > li:last-child > a {
+    border-right: 0;
+    border-radius: 0 5px 5px 0;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .masthead,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

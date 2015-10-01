@@ -1,0 +1,19 @@
+application: matthalp-connexus
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /assets
+  static_dir: assets
+- url: /.*
+  script: connexus.app
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+- name: PIL
+  version: latest

@@ -70,20 +70,21 @@ class CreatePage(webapp2.RequestHandler):
                     'text/html; charset=utf-8'
                 self.response.write(template.render(template_values))
             else:
-                subscribers = filter(lambda s: s != '', map(unicode.strip,
+                subscribers = filter(lambda s: s != '', map(unicode.lower,
+                                     map(unicode.strip,
                                      self.request.get('subscribers').split(','))
-                                     )
+                                     ))
                 # TODO message = self.request.get('message')
                 tags = filter(lambda t: t != '', map(unicode.strip,
                               self.request.get('tags').split(',')))
                 cover_image_url = self.request.get('cover_image_url')
                 cover_image_url = cover_image_url if cover_image_url \
                     else 'http://placehold.it/190x190.png'
-                stream = Stream(id=name, name=name, owner=user.email(),
+                stream = Stream(id=name, name=name, owner=user.email().lower(),
                                 subscribers=subscribers, tags=tags,
                                 cover_image_url=cover_image_url,
                                 images=[])
-                body = ('You are no subscribed to the %s stream:\n' +
+                body = ('You are now subscribed to the %s stream:\n' +
                         'http://mh33338-connexus.appspot.com/view?' +
                         'stream_name=%s&increment=1\n%s' % (name, message))
                 sender_address = 'Matthew Halpern <matthalp@gmail.com>'
@@ -141,11 +142,11 @@ class ManagePage(webapp2.RequestHandler):
             self.response.write(template.render(template_values))
         else:
             owned_streams = (
-                Stream.query(Stream.owner == user.email())
+                Stream.query(Stream.owner == user.email().lower())
                 .order(-Stream.name).fetch()
             )
             subscribed_streams = (
-                Stream.query(Stream.subscribers == user.email())
+                Stream.query(Stream.subscribers == user.email().lower())
                 .order(-Stream.name).fetch()
             )
             template_values = {
@@ -160,32 +161,64 @@ class ManagePage(webapp2.RequestHandler):
 class UnsubscribeToStream(webapp2.RequestHandler):
     def post(self):
         user = users.get_current_user()
-        stream_names = self.request.POST.getall('stream')
-        if stream_names:
-            streams = Stream.query(Stream.name.IN(stream_names)).fetch()
-            for stream in streams:
-                stream.subscribers.remove(user.email())
-                stream.put()
-        self.redirect('/manage')
+        if user:
+            stream_names = self.request.POST.getall('stream')
+            if stream_names:
+                stream_names = self.request.POST.getall('stream')
+                if stream_names:
+                    streams = Stream.query(Stream.name.IN(stream_names)).fetch()
+                    for stream in streams:
+                        stream.subscribers.remove(user.email().lower())
+                        stream.put()
+            self.redirect('/manage')
+        else:
+            template_values = {
+                'error': 'Error: user not logged in.'
+            }
+            template = JINJA_ENVIRONMENT.get_template('views/error.html')
+            self.response.headers['Content-Type'] = \
+                'text/html; charset=utf-8'
+            self.response.write(template.render(template_values))
 
 
 class SubscribeToStream(webapp2.RequestHandler):
     def post(self):
         user = users.get_current_user()
-        stream_names = self.request.POST.getall('stream')
-        if stream_names:
-            streams = Stream.query(Stream.name.IN(stream_names)).fetch()
-            for stream in streams:
-                stream.subscribers.append(user.email())
-                stream.put()
+        if user:
+            stream_names = self.request.POST.getall('stream')
+            if stream_names:
+                streams = Stream.query(Stream.name.IN(stream_names)).fetch()
+                for stream in streams:
+                    stream.subscribers.append(user.email().lower())
+                    stream.put()
+            self.redirect('/view?stream_name=%s' % stream_names[0])
+        else:
+            template_values = {
+                'error': 'Error: user not logged in.'
+            }
+            template = JINJA_ENVIRONMENT.get_template('views/error.html')
+            self.response.headers['Content-Type'] = \
+                'text/html; charset=utf-8'
+            self.response.write(template.render(template_values))
 
 
 class DeleteStream(webapp2.RequestHandler):
     def post(self):
-        stream_names = self.request.POST.getall('stream')
-        streams = Stream.query(Stream.name.IN(stream_names)).fetch()
-        ndb.delete_multi(map(lambda s: s.key, streams))
-        self.redirect('/manage')
+        user = users.get_current_user()
+        if user:
+            stream_names = self.request.POST.getall('stream')
+            if stream_names:
+                streams = Stream.query(Stream.name.IN(stream_names)).fetch()
+                ndb.delete_multi(map(lambda s: s.key, streams))
+            self.redirect('/manage')
+        else:
+            template_values = {
+                'error': 'Error: user not logged in.'
+            }
+            template = JINJA_ENVIRONMENT.get_template('views/error.html')
+            self.response.headers['Content-Type'] = \
+                'text/html; charset=utf-8'
+            self.response.write(template.render(template_values))
 
 
 class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):

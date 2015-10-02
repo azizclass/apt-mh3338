@@ -17,7 +17,7 @@
                 {% for stream in owned_streams %}
                 <tr>
                     <td>
-                        <a class="stream-link" href="view?stream={{ stream.name }}">
+                        <a class="stream-link" href="view?stream_name={{ stream.name }}">
                             {{ stream.name }}
                         </a>
                     </td>
@@ -57,7 +57,7 @@
             {% for stream in subscribed_streams %}
             <tr>
                 <td>
-                    <a class="stream-link" href="view?stream={{ stream.name }}">
+                    <a class="stream-link" href="view?stream_name={{ stream.name }}">
                         {{ stream.name }}
                     </a>
                 </td>

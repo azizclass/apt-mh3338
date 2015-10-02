@@ -11,6 +11,7 @@ app = webapp2.WSGIApplication([
     ('/leaderboard_calc',  controllers.LeaderboardCalculation),
     ('/search',  controllers.SearchPage),
     ('/social',  controllers.SocialPage),
+    ('/subscribe',  controllers.SubscribeToStream),
     ('/trending',  controllers.TrendingPage),
     ('/trend_email',  controllers.TrendingEmail),
     ('/unsubscribe',  controllers.UnsubscribeToStream),

@@ -1,72 +1,216 @@
 {% extends "views/baseui.html" %}
 {% set active_page = "view" %}
+{% block scripts %}
+<script src="assets/js/jquery-1.11.3.min.js"></script>
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/dropzone.js"></script>
+<script src="assets/js/jquery-dropzone.js"></script>
+{% endblock %}
 {% block meta %}
 <meta property="og:url" content="http://mh33338-connexus.appspot.com/view?stream_name={{ stream.name }}&cursor={{ cursor }}" />
 <meta property="og:type"          content="website" />
 <meta property="og:title"         content="Connexus - mh33338" />
 <meta property="og:description"   content="{{ stream.name }}" />
-<meta property="og:image" content="{{ stream.cover_image_url }}" />
+<meta property="og:image" content="{{ stream.cover_image_url | safe }}" />
 {% endblock %}
 {% block content %}
+<style>
+    html, body {
+        height: 100%;
+    }
+    #actions {
+        margin: 2em 0;
+    }
+
+    div.table {
+        display: table;
+    }
+    div.table
+    .file-row {
+        display: table-row;
+    }
+    div.table .file-row > div
+    {
+        display: table-cell;
+        vertical-align: top;
+        border-top: 1px
+        solid #ddd;
+        padding: 8px;
+    }
+    div.table .file-row:nth-child(odd)
+    {
+        background: #f9f9f9;
+    }
+    #total-progress
+    {
+        opacity: 0;
+        transition: opacity 0.3s linear;
+    }
+    #previews .file-row.dz-success .progress
+    {
+        opacity: 0;
+        transition: opacity 0.3s linear;
+    }
+    #previews .file-row .delete
+    {
+        display: none;
+    }
+    #previews .file-row.dz-success .start,
+    #previews .file-row.dz-success .cancel
+    {
+        display: none;
+    }
+    #previews .file-row.dz-success .delete
+    {
+        display: block;
+    }
+</style>
+<br/>
+<div class="row">
+    <form action="/subscribe" method="post">
+        <input type=hidden name="stream" value="{{ stream.name }}">
+        <button type="submit" class="btn btn-default">Subscribe</button>
+    </form>
+</div>
 <br/>
 <div class="row">
     {% for image in stream.images[cursor:cursor+3] %}
-    <div class="col-lg-3">
+    <div class="col-md-3">
         <div class="thumbnail">
-            <img src="{{ image.url }}" 
+            <img src="{{ image.url | safe }}" 
             class="img-responsive">
         </div>
     </div>
     {% endfor %}
-    <div class="col-lg-3">
+    <div class="col-md-3">
         {% if cursor + 3 < stream.images | length %}
         <a href="/view?stream_name={{ stream.name }}&cursor={{ cursor + 3 }}">
             <button type="submit" class="btn btn-default more-pics">More Pictures</button>
         </a>
         {% endif %}
     </div>
+    <br/>
+    <br/>
+    <div class="col-md-3">
+        <a href="/geo?stream_name={{ stream.name }}">
+            <button type="submit" class="btn btn-default more-pics">Geo View</button>
+        </a>
+    </div>
 </div>
 <br/>
-<div class="row">
-    <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <form action="{{ upload_url }}" method="POST" 
-                    enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <span class="btn btn-default btn-file">
-                                File name<input type="file" name="file">
-                            </span>
-                        </div>
-                        <div class="col-lg-7 col-md-offset-1">
-                            <input type="text" class="form-control"
-                            name="comments" placeholder="Comments"/> 
-                        </div>
-                    </div>
-                    <br/>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <input type="hidden" name="stream_name"
-                            value="{{ stream.name}}">
-                            <button type="submit" name="submit" value="Submit" 
-                                class="btn btn-default">Upload file</button>
-                        </div>
-                        <div class="col-lg-8">
-                            <h2>Add an image</h2>
-                        </div>
-                    </div>
-                </form>
+<div id="actions" class="row">
+    <div class="col-md-7">
+        <button class="btn btn-default fileinput-button">
+            Add Files
+        </button>
+        <button type="submit" class="btn btn-default start">
+            Start Upload
+        </button>
+        <button type="reset" class="btn btn-default cancel">
+            Cancel Upload
+        </button>
+        <button type="reset" class="btn btn-default delete">
+            Delete
+        </button>
+    </div>
+    <div class="col-md-5">
+        <span class="fileupload-process">
+            <div id="total-progress" class="progress progress-striped active"
+                role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                aria-valuenow="0">
+                <div class="progress-bar progress-bar-success" style="width:0%;"
+                    data-dz-uploadprogress>
+                </div>
             </div>
+        </span>
+    </div>
+</div>
+<div class="table table-striped" class="files" id="previews">
+    <div id="template" class="file-row">
+        <div style="vertical-align:middle;">
+            <span class="preview"><img data-dz-thumbnail /></span>
+        </div>
+        <div style="vertical-align:middle;">
+            <p class="name" data-dz-name></p>
+            <strong class="error text-danger" data-dz-errormessage></strong>
+        </div>
+        <div style="vertical-align:middle;">
+            <p class="size" data-dz-size></p>
+            <div class="progress progress-striped active" role="progressbar"
+                aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+                style="display: none;" >
+                <div class="progress-bar progress-bar-success" style="width:0%;"
+                    data-dz-uploadprogress>
+                </div>
+            </div>
+        </div>
+        <div style="vertical-align:middle;">
+            <button class="btn btn-default start">
+                Start Upload
+            </button>
+            <button data-dz-remove class="btn btn-default cancel">
+                Cancel Upload
+            </button>
+            <button data-dz-remove class="btn btn-default delete">
+                Delete
+            </button>
+
         </div>
     </div>
 </div>
-<div class="row">
-<form action="/subscribe" method="post">
-    <input type=hidden name="stream" value="{{ stream.name }}">
-    <button type="submit" class="btn btn-default">Subscribe</button>
-</form>
-</div>
+<script>
+var previewNode = document.querySelector("#template");
+var previewTemplate = previewNode.parentNode.innerHTML;
+previewNode.parentNode.removeChild(previewNode);
+
+var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+  url: "{{ upload_url | safe }}",
+  thumbnailWidth: 80,
+  thumbnailHeight: 80,
+  parallelUploads: 20,
+  previewTemplate: previewTemplate,
+  autoQueue: false, // Make sure the files aren't queued until manually added
+  previewsContainer: "#previews", // Define the container to display the previews
+  clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+  params: {"stream_name": "{{ stream.name }}"}
+});
+
+myDropzone.on("addedfile", function(file) {
+  // Hookup the start button
+  file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
+});
+
+// Update the total progress bar
+myDropzone.on("totaluploadprogress", function(progress) {
+  document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+});
+
+myDropzone.on("sending", function(file) {
+  // Show the total progress bar when upload starts
+  document.querySelector("#total-progress").style.opacity = "1";
+  // And disable the start button
+  file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+});
+
+// Hide the total progress bar when nothing's uploading anymore
+myDropzone.on("queuecomplete", function(progress) {
+  document.querySelector("#total-progress").style.opacity = "0";
+});
+
+// Setup the buttons for all transfers
+// The "add files" button doesn't need to be setup because the config
+// `clickable` has already been specified.
+document.querySelector("#actions .start").onclick = function() {
+  myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+};
+document.querySelector("#actions .cancel").onclick = function() {
+  myDropzone.removeAllFiles(true);
+};
+document.querySelector("#actions .delete").onclick = function() {
+  myDropzone.removeAllFiles(true);
+};
+</script>
 <div class="row">
     <div id="fb-root"></div>
     <script>

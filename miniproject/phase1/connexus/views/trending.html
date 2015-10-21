@@ -4,7 +4,7 @@
 <br/>
 <div class="row">
     {% for stream in streams %}
-    <div class="col-lg-3">
+    <div class="col-md-3">
         <div class="thumbnail">
             <a href="/view?stream_name={{ stream.name }}&increment=1">
                 <img src="{{ stream.cover_image_url }}" class="img-responsive">
@@ -18,7 +18,7 @@
         </div>
     </div>
     {% endfor %}
-    <div class="col-lg-3">
+    <div class="col-md-3">
         <form action="/trend_email" method="post">
             <div class="checkbox">
                 <label>

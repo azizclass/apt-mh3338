@@ -1,80 +1,75 @@
 #!/usr/bin/env python
 
-import jinja2
-import os
-import webapp2
 import datetime
 import logging
-from google.appengine.api import users
-from google.appengine.api import images
-from google.appengine.ext import blobstore
+import jinja2
+import json
+import os
+import webapp2
+from google.appengine.api import blobstore, images, mail, users
 from google.appengine.ext import ndb
-from google.appengine.api import mail
 from google.appengine.ext.webapp import blobstore_handlers
-from models import Image, Stream, TrendingEmailConfig
+from models import Image, SearchTerm, Stream, TrendingEmailConfig
 
+LOGIN_TEMPLATE = 'views/login.html'
+CREATE_STREAM_TEMPLATE = 'views/create.html'
+VIEW_STREAM_TEMPLATE = 'views/create.html'
+SECS_PER_HOUR = 3600
 
 JINJA_ENVIRONMENT = jinja2.Environment(
-        loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
-        extensions=['jinja2.ext.autoescape'],
-        autoescape=True)
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True
+)
 
 
-class MainPage(webapp2.RequestHandler):
-    def get(self):
-        template_values = {
-            'login_url': users.create_login_url('/')
-        }
-        template = JINJA_ENVIRONMENT.get_template('views/create.html')
+class ConnexusHandler(webapp2.RequestHandler):
+    def template(self, template, **template_values):
+        template = JINJA_ENVIRONMENT.get_template(template)
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
         self.response.write(template.render(template_values))
 
+    def login_page(self):
+        self.template(CREATE_STREAM_TEMPLATE,
+                      login_url=users.create_login_url('/'))
 
-class CreatePage(webapp2.RequestHandler):
+    def create_stream_page(self):
+        self.template('views/create.html')
+
+
+class MainPage(ConnexusHandler):
+    def get(self):
+        self.login_page()
+
+
+class CreatePage(ConnexusHandler):
     def get(self):
         user = users.get_current_user()
         if not user:
-            template_values = {
-                'login_url': users.create_login_url(self.request.uri)
-            }
-            template = JINJA_ENVIRONMENT.get_template('views/login.html')
-            self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-            self.response.write(template.render(template_values))
+            self.login_page()
         else:
-            template_values = {}
-            template = JINJA_ENVIRONMENT.get_template('views/create.html')
-            self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-            self.response.write(template.render(template_values))
+            self.create_stream_page()
 
     def post(self):
         user = users.get_current_user()
         if not user:
-            template_values = {
-                'login_url': users.create_login_url(self.request.uri)
-            }
-            template = JINJA_ENVIRONMENT.get_template('views/login.html')
-            self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-            self.response.write(template.render(template_values))
+            self.login_page()
         else:
             name = self.request.get('name')
             message = self.request.get('message')
             key = ndb.Key('Stream', name)
             stream = key.get()
             if stream:
-                template_values = {'error': 'Error: you tried to create a ' +
-                                            'new stream whose name is the ' +
-                                            'same as an existing stream; ' +
-                                            'operation did not complete'}
-                template = JINJA_ENVIRONMENT.get_template('views/error.html')
-                self.response.headers['Content-Type'] = \
-                    'text/html; charset=utf-8'
-                self.response.write(template.render(template_values))
+                self.template('views/error.html',
+                              error='Error: you tried to create a new stream ' +
+                                     'whose name is the same as an existing ' +
+                                     'stream; operation did not complete')
             else:
                 subscribers = filter(lambda s: s != '', map(unicode.lower,
                                      map(unicode.strip,
                                      self.request.get('subscribers').split(','))
                                      ))
-                # TODO message = self.request.get('message')
+                message = self.request.get('message')
                 tags = filter(lambda t: t != '', map(unicode.strip,
                               self.request.get('tags').split(',')))
                 cover_image_url = self.request.get('cover_image_url')
@@ -224,16 +219,23 @@ class DeleteStream(webapp2.RequestHandler):
 class PhotoUploadHandler(blobstore_handlers.BlobstoreUploadHandler):
     def post(self):
         try:
+            logging.info("ONE")
             upload = self.get_uploads()[0]
-            comments = self.request.get('comments')
+            logging.info("TWO")
             stream_name = self.request.get('stream_name')
+            logging.info("THREE")
             key = ndb.Key('Stream', stream_name)
+            logging.info("FOUR")
             stream = key.get()
+            logging.info("FIVE")
             image = Image(url=images.get_serving_url(upload.key()),
-                          photo_key=upload.key(), comment=comments)
+                          photo_key=upload.key(), comment="")
+            logging.info("SIX")
             stream.images.insert(0, image)
+            logging.info("SEVEN")
             stream.put()
-            self.redirect('/view?stream_name=%s' % stream_name)
+            logging.info("EIGHT")
+            self.response.write(images.get_serving_url(upload.key()))
         except:
             pass
 
@@ -243,7 +245,8 @@ class SearchPage(webapp2.RequestHandler):
         query = self.request.get('query')
         if query:
             streams = Stream.query().order(Stream.date).fetch()
-            matches = filter(lambda s: query in s.name, streams)[:5]
+            matches = filter(lambda s: query in s.name or query in s.tags,
+                             streams)[:5]
         else:
             query = ''
             matches = []
@@ -331,7 +334,6 @@ class TrendingEmail(webapp2.RequestHandler):
 
 class LeaderboardCalculation(webapp2.RequestHandler):
     def get(self):
-        SECS_PER_HOUR = 3600
         streams = Stream.query().fetch()
         logging.info("STREAMS %d" % len(streams))
         now = datetime.datetime.now()
@@ -339,3 +341,57 @@ class LeaderboardCalculation(webapp2.RequestHandler):
             stream.recent_views = filter(lambda rv: (now - rv).seconds < SECS_PER_HOUR,
                                          stream.recent_views)
             stream.put()
+
+
+class SearchIndexing(webapp2.RequestHandler):
+    def update_term(self, term, stream_name):
+        key = ndb.Key('SearchTerm', term)
+        search_term = key.get()
+        if not search_term:
+            search_term = SearchTerm(term=term, stream_names=[stream_name])
+        else:
+            terms = search_term.stream_names.append(stream_name)
+            search_term.stream_names = list(set(terms))
+        search_term.put()
+
+    def get(self):
+        streams = Stream.query().order(Stream.date).fetch()
+        for stream in streams:
+            self.update_term(stream.name, stream.name)
+            for tag in stream.tags:
+                self.update_term(tag, stream.name)
+
+
+class GeoView(webapp2.RequestHandler):
+    def get(self):
+        stream_name = self.request.get('stream_name')
+        if stream_name:
+            key = ndb.Key('Stream', stream_name)
+            stream = key.get()
+        else:
+            stream = None
+        if stream:
+            increment = self.request.get('increment')
+            if increment:
+                stream.views += int(increment)
+                stream.recent_views.append(datetime.datetime.now())
+                stream.put()
+            template_values = {
+                'stream': stream
+            }
+            template = JINJA_ENVIRONMENT.get_template('views/geo.html')
+            self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
+            self.response.write(template.render(template_values))
+        else:
+            self.template('views/error.html',
+                          error='Error: stream does not exist')
+
+
+class SearchTerms(webapp2.RequestHandler):
+    def get(self):
+        term = self.request.get('term')
+        terms = map(lambda t: t.term,
+                    SearchTerm.query().order(SearchTerm.term).fetch())
+        matches = list(set(filter(lambda t: term in t, terms)))
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps({"matches": matches}))

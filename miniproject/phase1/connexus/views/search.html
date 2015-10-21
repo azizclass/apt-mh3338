@@ -1,24 +1,6 @@
 {% extends "views/baseui.html" %}
 {% set active_page = "search" %}
 {% block content %}
-<br/>
-<br/>
-<div class="row">
-    <form action="/search" method="get">
-        <div class="col-lg-4">
-            <div class="input-group">
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </span>
-                <input type="text" name="query" class="form-control"
-                value="{{ query }}">
-            </div>
-            <br/>
-            <button type="submit" class="btn btn-default">Search</button>
-        </div>
-    </form>
-</div>
-</br>
 {% if query %}
 <h4>{{ matches | length }} results for <b>{{ query }}</b>,</h4>
 <h4>click on an image to view stream</h4>
@@ -26,11 +8,11 @@
 </br>
 {% for match in matches %}
 <div class="row">
-    <div class="col-lg-3">
+    <div class="col-md-3">
         <div class="thumbnail">
             <a href="/view?stream_name={{ match.name }}&increment=1">
                 {% if match.cover_image_url %}
-                    <img src="{{ match.cover_image_url }}" 
+                    <img src="{{ match.cover_image_url | safe }}" 
                      class="img-responsive">
                 {% else %}
                     <img

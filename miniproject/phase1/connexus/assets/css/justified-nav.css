@@ -27,6 +27,10 @@ body {
 }
 
 /* Customize the nav-justified links to be fill the entire space of the .navbar */
+.ui-menu-item {
+    margin: 6px 12px;
+}
+
 .btn-file {
     position: relative;
     overflow: hidden;

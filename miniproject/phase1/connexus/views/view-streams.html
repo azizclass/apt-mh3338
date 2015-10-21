@@ -7,11 +7,11 @@
 <br/>
 <div class="row">
     {% for stream in streams %}
-    <div class="col-lg-3">
+    <div class="col-md-3">
         <div class="thumbnail">
             <a href="/view?stream_name={{ stream.name }}&increment=1">
                 {% if stream.cover_image_url %}
-                    <img src="{{ stream.cover_image_url }}" 
+                    <img src="{{ stream.cover_image_url | safe }}" 
                      class="img-responsive">
                 {% else %}
                     <img

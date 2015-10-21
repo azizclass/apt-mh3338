@@ -28,3 +28,9 @@ class TrendingEmailConfig(ndb.Model):
     """Sub model for storing trending e-mail information."""
     mode = ndb.StringProperty(indexed=False, default="none")
     ticks = ndb.IntegerProperty(indexed=False, default=0)
+
+
+class SearchTerm(ndb.Model):
+    """Sub model for representing a stream image."""
+    term = ndb.StringProperty(indexed=True)
+    stream_names = ndb.StringProperty(indexed=False, repeated=True)

@@ -1,17 +1,15 @@
 {% extends "views/baseui.html" %}
 {% set active_page = "manage" %}
 {% block content %}
-<br/>
-<br/>
 <h2>Streams I own</h2>
 <form action="/delete" method="post">
     <div class="row">
         <table class="table">
             <thead><tr>
-                    <th class="col-lg-5">Name</th>
-                    <th class="col-lg-2">Last New Picture</th>
-                    <th class="col-lg-3">Number of Pictures</th>
-                    <th class="col-lg-2">Delete</th>
+                    <th class="col-md-5">Name</th>
+                    <th class="col-md-2">Last New Picture</th>
+                    <th class="col-md-3">Number of Pictures</th>
+                    <th class="col-md-2">Delete</th>
             </tr></thead>
             <tbody>
                 {% for stream in owned_streams %}
@@ -47,11 +45,11 @@
 <div class="row">
     <table class="table table-striped">
         <thead><tr>
-                <th class="col-lg-4">Name</th>
-                <th class="col-lg-2">Last New Picture</th>
-                <th class="col-lg-2">Number of Pictures</th>
-                <th class="col-lg-2">Views</th>
-                <th class="col-lg-2">Unsubscribe</th>
+                <th class="col-md-4">Name</th>
+                <th class="col-md-2">Last New Picture</th>
+                <th class="col-md-2">Number of Pictures</th>
+                <th class="col-md-2">Views</th>
+                <th class="col-md-2">Unsubscribe</th>
         </tr></thead>
         <tbody>
             {% for stream in subscribed_streams %}

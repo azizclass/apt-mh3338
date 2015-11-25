@@ -1,0 +1,298 @@
+....E..F.46341* 46341 = -2147479015
+46340* 46340 = 2147395600
+low high: 0/1 46340/1
+square of midpoint is: 536848900/1
+low high: 0/1 23170/1
+square of midpoint is: 134212225/1
+low high: 0/1 11585/1
+square of midpoint is: 134212225/4
+low high: 0/1 11585/2
+square of midpoint is: 134212225/16
+low high: 0/1 11585/4
+square of midpoint is: 134212225/64
+low high: 0/1 11585/8
+square of midpoint is: 134212225/256
+low high: 0/1 11585/16
+square of midpoint is: 134212225/1024
+low high: 0/1 11585/32
+square of midpoint is: 134212225/4096
+low high: 0/1 11585/64
+square of midpoint is: 134212225/16384
+low high: 0/1 11585/128
+square of midpoint is: 134212225/65536
+low high: 0/1 11585/256
+square of midpoint is: 134212225/262144
+low high: 0/1 11585/512
+square of midpoint is: 134212225/1048576
+low high: 0/1 11585/1024
+square of midpoint is: 134212225/4194304
+low high: 0/1 11585/2048
+square of midpoint is: 134212225/16777216
+low high: 0/1 11585/4096
+square of midpoint is: 134212225/67108864
+low high: 0/1 11585/8192
+square of midpoint is: 134212225/268435456
+low high: 0/1 11585/16384
+square of midpoint is: 134212225/1073741824
+low high: 11585/32768 11585/16384
+square of midpoint is: 1/0
+low high: 11585/32768 34755/65536
+square of midpoint is: -1/0
+low high: 57925/131072 34755/65536
+square of midpoint is: -1/0
+low high: 127435/262144 34755/65536
+square of midpoint is: -1/0
+low high: 266455/524288 34755/65536
+square of midpoint is: 1/0
+low high: 266455/524288 544495/1048576
+square of midpoint is: 1/0
+low high: 266455/524288 1077405/2097152
+square of midpoint is: 1/0
+low high: 266455/524288 2143225/4194304
+square of midpoint is: -1/0
+low high: 4274865/8388608 2143225/4194304
+square of midpoint is: -1/0
+F.F.E..IllegalArgumentToSquareRootException: Illegal argument to square root, should be in range [0,2147483647] got -1/4
+	at Rational.root(Rational.java:108)
+	at RationalTest.testRootInvalidRange(RationalTest.java:49)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:176)
+	at junit.framework.TestCase.runBare(TestCase.java:141)
+	at junit.framework.TestResult$1.protect(TestResult.java:122)
+	at junit.framework.TestResult.runProtected(TestResult.java:142)
+	at junit.framework.TestResult.run(TestResult.java:125)
+	at junit.framework.TestCase.run(TestCase.java:129)
+	at junit.framework.TestSuite.runTest(TestSuite.java:255)
+	at junit.framework.TestSuite.run(TestSuite.java:250)
+	at junit.textui.TestRunner.doRun(TestRunner.java:116)
+	at junit.textui.TestRunner.start(TestRunner.java:183)
+	at junit.textui.TestRunner.main(TestRunner.java:137)
+	at RationalTest.main(RationalTest.java:142)
+F...E
+Time: 0.005
+There were 3 errors:
+1) testMinus(RationalTest)java.lang.ArithmeticException: / by zero
+	at Rational.<init>(Rational.java:21)
+	at RationalTest.testMinus(RationalTest.java:92)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+2) testDivides(RationalTest)java.lang.ArithmeticException: / by zero
+	at Rational.<init>(Rational.java:21)
+	at Rational.times(Rational.java:71)
+	at Rational.divides(Rational.java:87)
+	at RationalTest.testDivides(RationalTest.java:116)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+3) testConstructor(RationalTest)java.lang.ArithmeticException: / by zero
+	at Rational.<init>(Rational.java:21)
+	at RationalTest.testConstructor(RationalTest.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+There were 4 failures:
+1) testPlus(RationalTest)junit.framework.AssertionFailedError: expected:<-2/-3> but was:<-2/3>
+	at RationalTest.testPlus(RationalTest.java:83)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+2) testRoot(RationalTest)junit.framework.AssertionFailedError
+	at RationalTest.testRoot(RationalTest.java:41)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+3) testIsLessThan(RationalTest)junit.framework.AssertionFailedError
+	at RationalTest.testIsLessThan(RationalTest.java:60)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+4) testRootInvalidRange(RationalTest)junit.framework.AssertionFailedError
+	at RationalTest.testRootInvalidRange(RationalTest.java:55)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+
+FAILURES!!!
+Tests run: 14,  Failures: 4,  Errors: 3
+
+....E..F.46341* 46341 = -2147479015
+46340* 46340 = 2147395600
+low high: 0/1 46340/1
+square of midpoint is: 536848900/1
+low high: 0/1 23170/1
+square of midpoint is: 134212225/1
+low high: 0/1 11585/1
+square of midpoint is: 134212225/4
+low high: 0/1 11585/2
+square of midpoint is: 134212225/16
+low high: 0/1 11585/4
+square of midpoint is: 134212225/64
+low high: 0/1 11585/8
+square of midpoint is: 134212225/256
+low high: 0/1 11585/16
+square of midpoint is: 134212225/1024
+low high: 0/1 11585/32
+square of midpoint is: 134212225/4096
+low high: 0/1 11585/64
+square of midpoint is: 134212225/16384
+low high: 0/1 11585/128
+square of midpoint is: 134212225/65536
+low high: 0/1 11585/256
+square of midpoint is: 134212225/262144
+low high: 0/1 11585/512
+square of midpoint is: 134212225/1048576
+low high: 0/1 11585/1024
+square of midpoint is: 134212225/4194304
+low high: 0/1 11585/2048
+square of midpoint is: 134212225/16777216
+low high: 0/1 11585/4096
+square of midpoint is: 134212225/67108864
+low high: 0/1 11585/8192
+square of midpoint is: 134212225/268435456
+low high: 0/1 11585/16384
+square of midpoint is: 134212225/1073741824
+low high: 11585/32768 11585/16384
+square of midpoint is: 1/0
+low high: 11585/32768 34755/65536
+square of midpoint is: -1/0
+low high: 57925/131072 34755/65536
+square of midpoint is: -1/0
+low high: 127435/262144 34755/65536
+square of midpoint is: -1/0
+low high: 266455/524288 34755/65536
+square of midpoint is: 1/0
+low high: 266455/524288 544495/1048576
+square of midpoint is: 1/0
+low high: 266455/524288 1077405/2097152
+square of midpoint is: 1/0
+low high: 266455/524288 2143225/4194304
+square of midpoint is: -1/0
+low high: 4274865/8388608 2143225/4194304
+square of midpoint is: -1/0
+F.F.E..IllegalArgumentToSquareRootException: Illegal argument to square root, should be in range [0,2147483647] got -1/4
+	at Rational.root(Rational.java:108)
+	at RationalTest.testRootInvalidRange(RationalTest.java:49)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at junit.framework.TestCase.runTest(TestCase.java:176)
+	at junit.framework.TestCase.runBare(TestCase.java:141)
+	at junit.framework.TestResult$1.protect(TestResult.java:122)
+	at junit.framework.TestResult.runProtected(TestResult.java:142)
+	at junit.framework.TestResult.run(TestResult.java:125)
+	at junit.framework.TestCase.run(TestCase.java:129)
+	at junit.framework.TestSuite.runTest(TestSuite.java:255)
+	at junit.framework.TestSuite.run(TestSuite.java:250)
+	at junit.textui.TestRunner.doRun(TestRunner.java:116)
+	at junit.textui.TestRunner.start(TestRunner.java:183)
+	at junit.textui.TestRunner.main(TestRunner.java:137)
+	at RationalTest.main(RationalTest.java:142)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.vladium.emma.rt.AppRunner$Invoker.run(AppRunner.java:655)
+	at java.lang.Thread.run(Thread.java:745)
+F...E
+Time: 0.011
+There were 3 errors:
+1) testMinus(RationalTest)java.lang.ArithmeticException: / by zero
+	at Rational.<init>(Rational.java:21)
+	at RationalTest.testMinus(RationalTest.java:92)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at com.vladium.emma.rt.AppRunner$Invoker.run(AppRunner.java:655)
+	at java.lang.Thread.run(Thread.java:745)
+2) testDivides(RationalTest)java.lang.ArithmeticException: / by zero
+	at Rational.<init>(Rational.java:21)
+	at Rational.times(Rational.java:71)
+	at Rational.divides(Rational.java:87)
+	at RationalTest.testDivides(RationalTest.java:116)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at com.vladium.emma.rt.AppRunner$Invoker.run(AppRunner.java:655)
+	at java.lang.Thread.run(Thread.java:745)
+3) testConstructor(RationalTest)java.lang.ArithmeticException: / by zero
+	at Rational.<init>(Rational.java:21)
+	at RationalTest.testConstructor(RationalTest.java:71)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at com.vladium.emma.rt.AppRunner$Invoker.run(AppRunner.java:655)
+	at java.lang.Thread.run(Thread.java:745)
+There were 4 failures:
+1) testPlus(RationalTest)junit.framework.AssertionFailedError: expected:<-2/-3> but was:<-2/3>
+	at RationalTest.testPlus(RationalTest.java:83)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at com.vladium.emma.rt.AppRunner$Invoker.run(AppRunner.java:655)
+	at java.lang.Thread.run(Thread.java:745)
+2) testRoot(RationalTest)junit.framework.AssertionFailedError
+	at RationalTest.testRoot(RationalTest.java:41)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at com.vladium.emma.rt.AppRunner$Invoker.run(AppRunner.java:655)
+	at java.lang.Thread.run(Thread.java:745)
+3) testIsLessThan(RationalTest)junit.framework.AssertionFailedError
+	at RationalTest.testIsLessThan(RationalTest.java:60)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at com.vladium.emma.rt.AppRunner$Invoker.run(AppRunner.java:655)
+	at java.lang.Thread.run(Thread.java:745)
+4) testRootInvalidRange(RationalTest)junit.framework.AssertionFailedError
+	at RationalTest.testRootInvalidRange(RationalTest.java:55)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at RationalTest.main(RationalTest.java:142)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at com.vladium.emma.rt.AppRunner$Invoker.run(AppRunner.java:655)
+	at java.lang.Thread.run(Thread.java:745)
+
+FAILURES!!!
+Tests run: 14,  Failures: 4,  Errors: 3
+
+EMMA: writing [html] report to [/Users/Matt/Development/Trinity/apt-mh3338/lab4/junit/coverage/index.html] ...

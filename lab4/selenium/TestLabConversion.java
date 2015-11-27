@@ -50,8 +50,10 @@ public class Foo extends TestCase {
         assertTrue(isValidUser("bob", "bathtub"));
         assertTrue(isValidUser("charley", "china"));
         // case insensitivity for username
+        sleep(11000);
         assertTrue(isValidUser("ChArLeY", "china"));
         // case sensitivity for password
+        sleep(11000);
         assertFalse(isValidUser("charley", "ChInA"));
     }
 

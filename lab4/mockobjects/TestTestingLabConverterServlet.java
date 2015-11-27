@@ -7,7 +7,6 @@ public class TestTestingLabConverterServlet extends TestCase {
         TestingLabConverterServlet s = new TestingLabConverterServlet();
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
-
         response.setExpectedContentType("text/html");
         s.doGet(request,response);
         response.verify();
@@ -21,7 +20,6 @@ public class TestTestingLabConverterServlet extends TestCase {
         TestingLabConverterServlet s = new TestingLabConverterServlet();
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
-
         request.setupAddParameter("farenheitTemperature", "invalid!");
         response.setExpectedContentType("text/html");
         s.doGet(request,response);
@@ -51,6 +49,9 @@ public class TestTestingLabConverterServlet extends TestCase {
 
     // Temperature inputs are floating point numbers in decimal notation (i.e.,
     // 97 or -3.14, but not 9.73E2)
+    // Temperature results should be 2 places of precision for temperatures from
+    // 0 to 212 degrees Farenheit, inclusive, and 1 place of precision
+    // otherwise.
     public void test_valid_input_integer() throws Exception {
     TestingLabConverterServlet s = new TestingLabConverterServlet();
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -67,6 +68,9 @@ public class TestTestingLabConverterServlet extends TestCase {
 
     // Temperature inputs are floating point numbers in decimal notation (i.e.,
     // 97 or -3.14, but not 9.73E2)
+    // Temperature results should be 2 places of precision for temperatures from
+    // 0 to 212 degrees Farenheit, inclusive, and 1 place of precision
+    // otherwise.
     public void test_valid_input_integer2() throws Exception {
     TestingLabConverterServlet s = new TestingLabConverterServlet();
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -76,7 +80,7 @@ public class TestTestingLabConverterServlet extends TestCase {
         s.doGet(request,response);
         response.verify();
         assertEquals("<html><head><title>Temperature Converter Result</title>"
-                     + "</head><body><h2>-3.14 Farenheit = -19.52 Celsius </h2>\n" 
+                     + "</head><body><h2>-3.14 Farenheit = -19.5 Celsius </h2>\n" 
                      + "<p><h3>The temperature in Austin is 451 degrees Farenheit</h3>\n"
                      + "</body></html>\n", response.getOutputStreamContents());
     }
